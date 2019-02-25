@@ -1,17 +1,16 @@
 package com.example.android.quakereport;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
@@ -31,20 +30,48 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         if(listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.earthquake_item, parent, false);
+                    R.layout.earthquake_list_item, parent, false);
         }
 
         // Get the {@link AndroidFlavor} object located at this position in the list
-        final Earthquake earthquake = getItem(position);
+        final Earthquake currentEarthquake = getItem(position);
 
-        TextView magText = listItemView.findViewById(R.id.mag_text);
-        TextView cityText = listItemView.findViewById(R.id.city_text);
-        TextView dateText = listItemView.findViewById(R.id.date_text);
+        TextView magnitudeText = listItemView.findViewById(R.id.magnitude);
+        TextView locationText = listItemView.findViewById(R.id.location);
+        TextView dateText = listItemView.findViewById(R.id.date);
+        TextView timeText = listItemView.findViewById(R.id.time);
 
-        magText.setText(String.format("%.1f", earthquake.getMag()));
-        cityText.setText(earthquake.getLocation());
-        dateText.setText(earthquake.getStringDate());
+        Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
+
+        magnitudeText.setText(String.format("%.1f", currentEarthquake.getMagnitude()));
+        locationText.setText(currentEarthquake.getLocation());
+
+        // Format the date string (i.e. "Mar 3, 1984")
+        String formattedDate = formatDate(dateObject);
+        // Display the date of the current earthquake in that TextView
+        dateText.setText(formattedDate);
+
+        // Format the time string (i.e. "4:30PM")
+        String formattedTime = formatTime(dateObject);
+        // Display the time of the current earthquake in that TextView
+        timeText.setText(formattedTime);
 
         return listItemView;
+    }
+
+    /**
+     * Return the formatted date string (i.e. "Mar 3, 1984") from a Date object.
+     */
+    private String formatDate(Date dateObject) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL dd, yyyy");
+        return dateFormat.format(dateObject);
+    }
+
+    /**
+     * Return the formatted date string (i.e. "4:30 PM") from a Date object.
+     */
+    private String formatTime(Date dateObject) {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+        return timeFormat.format(dateObject);
     }
 }

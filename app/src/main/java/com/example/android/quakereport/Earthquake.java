@@ -5,29 +5,25 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Earthquake {
-    private float mag;
-    private String location;
-    private Date date;
+    private float mMagnitude;
+    private String mLocation;
+    private long mTimeInMilliseconds;
 
-    public Earthquake(float mag, String location, long millis) {
-        this.mag = mag;
-        this.location = location;
-        this.date = new Date(millis);
+    public Earthquake(float magnitude, String location, long timeInMilliseconds) {
+        mMagnitude = magnitude;
+        mLocation = location;
+        mTimeInMilliseconds = timeInMilliseconds;
     }
 
-    public float getMag() {
-        return mag;
+    public float getMagnitude() {
+        return mMagnitude;
     }
 
     public String getLocation() {
-        return location;
+        return mLocation;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public String getStringDate() {
-        return new SimpleDateFormat("MMM dd, YYYY", new Locale("en")).format(date);
+    public long getTimeInMilliseconds() {
+        return mTimeInMilliseconds;
     }
 }
