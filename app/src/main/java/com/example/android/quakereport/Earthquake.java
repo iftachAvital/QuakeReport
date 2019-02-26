@@ -5,17 +5,17 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Earthquake {
-    private float mMagnitude;
+    private double mMagnitude;
     private String mLocation;
     private long mTimeInMilliseconds;
 
-    public Earthquake(float magnitude, String location, long timeInMilliseconds) {
+    public Earthquake(double magnitude, String location, long timeInMilliseconds) {
         mMagnitude = magnitude;
         mLocation = location;
         mTimeInMilliseconds = timeInMilliseconds;
     }
 
-    public float getMagnitude() {
+    public double getMagnitude() {
         return mMagnitude;
     }
 
